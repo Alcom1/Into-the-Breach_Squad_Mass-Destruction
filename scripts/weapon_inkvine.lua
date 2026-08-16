@@ -5,10 +5,11 @@ Weap_MD_Ranged_Inkvine = LineArtillery:new{
 	Icon = "weapons/vek_scarab.png",	
     PowerCost = 0,
 	Damage = 0,
+	Vent = false,
     BigSplash = false,
 	Upgrades = 2,
-	UpgradeList = { "Big Splash",  "+2 Damage"  },
-	UpgradeCost = { 2 , 3 },
+	UpgradeList = { "Vent Excess", "Big Splash" },
+	UpgradeCost = { 2 , 2 },
 	UpShot = "effects/shotup_ant1.png",
 	LaunchSound = "/enemy/scarab_1/attack",
 	ImpactSound = "/impact/generic/explosion",
@@ -23,42 +24,52 @@ Weap_MD_Ranged_Inkvine = LineArtillery:new{
 }
 
 Weap_MD_Ranged_Inkvine_A = Weap_MD_Ranged_Inkvine:new{
+    UpgradeDescription = "Apply A.C.I.D. to the left and right before firing.",
+	Vent = true
+}
+
+Weap_MD_Ranged_Inkvine_B = Weap_MD_Ranged_Inkvine:new{
     UpgradeDescription = "Adjacent tiles also receive A.C.I.D.",
     BigSplash = true
 }
 
-Weap_MD_Ranged_Inkvine_B = Weap_MD_Ranged_Inkvine:new{
-    UpgradeDescription = "Increases center hit damage by 2.",
-	Damage = 2
-}
-
 Weap_MD_Ranged_Inkvine_AB = Weap_MD_Ranged_Inkvine:new{
-    BigSplash = true,
-	Damage = 2,
+	Vent = true,
+    BigSplash = true
 }
 
 function Weap_MD_Ranged_Inkvine:GetSkillEffect(p1,p2)
 	local ret = SkillEffect()
-	local direction = GetDirection(p1 - p2)
 	
+	if self.Vent then
+		for j = -1, 1, 2 do
+			local curr = p1 + DIR_VECTORS[(GetDirection((p2 - p1) * j) + 1) % 4]
+
+			local damageVent = SpaceDamage(curr, 0)
+			damageVent.iAcid = 1
+			damageVent.sAnimation = "ExploAcid1"
+			ret:AddDamage(damageVent)
+		end   
+	end
+
 	ret:AddBounce(p1, 1)
-	
-	local damage = SpaceDamage(p2, self.Damage)
-	damage.sAnimation = "ExploArt1"
-	damage.iAcid = 1
-	ret:AddArtillery(damage, self.UpShot)
+	local damageMain = SpaceDamage(p2, self.Damage)
+	damageMain.sAnimation = "ExploArt1"
+	damageMain.iAcid = 1
+	damageMain.sAnimation = "ExploAcid1"
+	ret:AddArtillery(damageMain, self.UpShot)
 	
 	for dir = DIR_START, DIR_END do
 
-		damage = SpaceDamage(p2 + DIR_VECTORS[dir], 0)
-		damage.iPush = dir
+		local damagePush = SpaceDamage(p2 + DIR_VECTORS[dir], 0)
+		damagePush.iPush = dir
 
-        if BigSplash then
-            damage.iAcid = 1
+        if self.BigSplash then
+            damagePush.iAcid = 1
         end
 
-		damage.sAnimation = "airpush_"..dir
-		ret:AddDamage(damage)
+		damagePush.sAnimation = "airpush_"..dir
+		ret:AddDamage(damagePush)
 
 	end
 
