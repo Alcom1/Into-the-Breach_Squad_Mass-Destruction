@@ -81,8 +81,8 @@ function mod:init()
 
             main_highlight = { 123,  48,  45 },
             main_light =     {  64,   9,   1 },
-            main_mid =       {  15,  22,  16 },
-            main_dark =      {  20,  20,  32 },
+            main_mid =       {  22,  16,  15 },
+            main_dark =      {  20,  12,  12 },
 
             metal_light =    { 122, 136, 146 },
             metal_mid =      {  55,  60,  61 },
