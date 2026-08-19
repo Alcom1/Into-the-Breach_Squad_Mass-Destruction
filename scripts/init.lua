@@ -22,28 +22,28 @@ function mod:init()
     --mech sprites
     local mechSprites = {        
         --Drill Mech
-        md_mech_buzzsaw =               { PosX = -15, PosY = 0 },
-        md_mech_buzzsaw_ns =            { },
-        md_mech_buzzsaw_a =             { PosX = -15, PosY = 0 },
-        md_mech_buzzsaw_broken =        { PosX = -15, PosY = 0 },
-        md_mech_buzzsaw_w =             { PosX = -15, PosY = 0 },
-        md_mech_buzzsaw_w_broken =      { PosX = -15, PosY = 0 },
+        md_mech_buzzsaw =           { PosX = -17, PosY = 0 },
+        md_mech_buzzsaw_ns =        { },
+        md_mech_buzzsaw_a =         { PosX = -17, PosY = 0 },
+        md_mech_buzzsaw_broken =    { PosX = -17, PosY = 0 },
+        md_mech_buzzsaw_w =         { PosX = -17, PosY = 0 },
+        md_mech_buzzsaw_w_broken =  { PosX = -17, PosY = 0 },
 
         --Loader Mech
-        md_mech_burner =                { PosX = -15, PosY = 0 },
-        md_mech_burner_ns =             { },
-        md_mech_burner_a =              { PosX = -15, PosY = 0 },
-        md_mech_burner_broken =         { PosX = -15, PosY = 0 },
-        md_mech_burner_w =              { PosX = -15, PosY = 0 },
-        md_mech_burner_w_broken =       { PosX = -15, PosY = 0 },
+        md_mech_burner =            { PosX = -17, PosY = 0 },
+        md_mech_burner_ns =         { },
+        md_mech_burner_a =          { PosX = -17, PosY = 0 },
+        md_mech_burner_broken =     { PosX = -17, PosY = 0 },
+        md_mech_burner_w =          { PosX = -17, PosY = 0 },
+        md_mech_burner_w_broken =   { PosX = -17, PosY = 0 },
 
         --Transport Mech
-        md_mech_inkvine =             { PosX = -15, PosY = 0 },
-        md_mech_inkvine_ns =          { },
-        md_mech_inkvine_a =           { PosX = -15, PosY = 0 },
-        md_mech_inkvine_broken =      { PosX = -15, PosY = 0 },
-        md_mech_inkvine_w =           { PosX = -15, PosY = 0 },
-        md_mech_inkvine_w_broken =    { PosX = -15, PosY = 0 },
+        md_mech_inkvine =           { PosX = -17, PosY = 0 },
+        md_mech_inkvine_ns =        { },
+        md_mech_inkvine_a =         { PosX = -17, PosY = 0 },
+        md_mech_inkvine_broken =    { PosX = -17, PosY = 0 },
+        md_mech_inkvine_w =         { PosX = -17, PosY = 0 },
+        md_mech_inkvine_w_broken =  { PosX = -17, PosY = 0 },
     }
 
     --Mapping file names for mech sprites
