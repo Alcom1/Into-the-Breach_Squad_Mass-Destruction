@@ -10,9 +10,9 @@ Weap_MD_Ranged_Inkvine = LineArtillery:new{
 	Upgrades = 2,
 	UpgradeList = { "Vent Excess", "Big Splash" },
 	UpgradeCost = { 2 , 2 },
-	UpShot = "effects/shotup_ant1.png",
-	LaunchSound = "/enemy/scarab_1/attack",
-	ImpactSound = "/impact/generic/explosion",
+	UpShot = "effects/shotup_ant2.png",
+	LaunchSound = "/weapons/acid_shot",
+	ImpactSound = "/impact/generic/acid_canister",
 	TipImage = {
 		Unit = Point(2,4),
 		Enemy = Point(2,2),
@@ -54,7 +54,6 @@ function Weap_MD_Ranged_Inkvine:GetSkillEffect(p1,p2)
 
 	ret:AddBounce(p1, 1)
 	local damageMain = SpaceDamage(p2, self.Damage)
-	damageMain.sAnimation = "ExploArt1"
 	damageMain.iAcid = 1
 	damageMain.sAnimation = "ExploAcid1"
 	ret:AddArtillery(damageMain, self.UpShot)
