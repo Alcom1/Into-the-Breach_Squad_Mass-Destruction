@@ -1,6 +1,6 @@
 Weapon_MD_Prime_Buzzsaw = Skill:new{
-    Name = "Central Buzzsaw",
-    Description = "Pass through a tile, dealing 1 damage to it and spreading its A.C.I.D. or fire status ahead.",
+    Name = "Giant Buzzsaw",
+    Description = "Saw a unit through the mech. Spread its A.C.I.D. or fire status ahead.",
     Class = "Prime",
 	Icon = "advanced/weapons/Science_KO_Crack.png",
     Damage = 1,
@@ -37,9 +37,9 @@ Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
 function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
     local ret = PointList()
     for i = DIR_START, DIR_END do
-        local point = p1 + DIR_VECTORS[i] * 2
+        local point = p1 + DIR_VECTORS[i] * 1
 
-        if Board:IsValid(point) and not Board:IsBlocked(point, PATH_FLYER) then
+        if Board:IsValid(point) then
             ret:push_back(point)
         end
     end
@@ -59,25 +59,25 @@ end
 function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
     local ret = SkillEffect()
 
-    ret:AddSound(self.DamageSound)                              --Initial Saw Sound
-    ret:AddCharge(Board:GetPath(p1, p2, PATH_FLYER), NO_DELAY)  --Charge!
+    local p3 = p1 + DIR_VECTORS[GetDirection(p1 - p2)]
 
-    ret:AddDelay(0.1)
-
-    local pMid = p1 + DIR_VECTORS[GetDirection(p2 - p1)]
-
-    local pawnMid = Board:GetPawn(pMid)
-    local isFire = Board:IsFire(pMid) or (pawnMid ~= nil and pawnMid:IsFire())
-    local isAcid = Board:IsAcid(pMid) or (pawnMid ~= nil and pawnMid:IsAcid())
-
-    local damage = SpaceDamage(pMid, self.Damage)
+    local damage = SpaceDamage(p2, self.Damage)
     --damage.iAcid = 1
-    damage.sSound = self.DamageSound
-
     ret:AddDamage(damage)
-    ret:AddBounce(pMid, 1)
 
-    local distance = 3
+    local pawn2 = Board:GetPawn(p2)
+
+    if pawn2 ~= nil then
+        ret:AddSound(self.DamageSound)                              --Initial Saw Sound
+        ret:AddCharge(Board:GetPath(p2, p3, PATH_FLYER), NO_DELAY)  --Charge!
+    end
+
+    -- local isFire = Board:IsFire(p2) or (pawn2 ~= nil and pawn2:IsFire())
+    -- local isAcid = Board:IsAcid(p2) or (pawn2 ~= nil and pawn2:IsAcid())
+    local isFire = (pawn2 ~= nil and pawn2:IsFire())
+    local isAcid = (pawn2 ~= nil and pawn2:IsAcid())
+
+    local distance = 2
     while true do
 
         local p3 = p1 + DIR_VECTORS[GetDirection(p2 - p1)] * distance
