@@ -1,27 +1,27 @@
 Weapon_MD_Prime_Buzzsaw = Skill:new{
     Name = "Giant Buzzsaw",
-    Description = "Saw a unit through the mech. Spread its A.C.I.D. or fire status ahead.",
+    Description = "Attack a unit and spread its A.C.I.D. or fire status ahead.",
     Class = "Prime",
 	Icon = "advanced/weapons/Science_KO_Crack.png",
     Damage = 1,
-    Backdraft = false,
+    Vore = false,
     PowerCost = 0,
     Upgrades = 2,
     UpgradeCost = { 2, 2 },
-    UpgradeList = { "Backdraft", "+1 Damage" },
+    UpgradeList = { "Voracious", "+1 Damage" },
     DamageSound = "/mech/distance/artillery/death",
     TipImage = {
-        Unit = Point(2, 4),
-		Fire1 = Point(2, 3),
+        Unit = Point(2, 3),
+		Fire1 = Point(2, 2),
         Enemy = Point(2, 2),
         Enemy2 = Point(2, 1),
-        Target = Point(2, 0)
+        Target = Point(2, 2)
     }
 }
 
 Weapon_MD_Prime_Buzzsaw_A = Weapon_MD_Prime_Buzzsaw:new{
-    UpgradeDescription = "Spread A.C.I.D and fire backwards as well as forwards.",
-    Backdraft = true
+    UpgradeDescription = "Target will be dragged under and behind this unit",
+    Vore = true
 }
 
 Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
@@ -30,7 +30,7 @@ Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
 }
 
 Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
-    Backdraft = true,
+    Vore = true,
 	Damage = 2
 }	
 
@@ -62,20 +62,18 @@ function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
     local p3 = p1 + DIR_VECTORS[GetDirection(p1 - p2)]
 
     local damage = SpaceDamage(p2, self.Damage)
-    --damage.iAcid = 1
-    ret:AddDamage(damage)
+    ret:AddMelee(p1, damage)
+    ret:AddSound(self.DamageSound)
 
     local pawn2 = Board:GetPawn(p2)
 
-    if pawn2 ~= nil then
-        ret:AddSound(self.DamageSound)                              --Initial Saw Sound
-        ret:AddCharge(Board:GetPath(p2, p3, PATH_FLYER), NO_DELAY)  --Charge!
+    if self.Vore and pawn2 ~= nil and not Board:IsBlocked(p3, PATH_FLYER) then
+        ret:AddDelay(0.05)
+        ret:AddCharge(Board:GetPath(p2, p3, PATH_FLYER), NO_DELAY)
     end
 
-    -- local isFire = Board:IsFire(p2) or (pawn2 ~= nil and pawn2:IsFire())
-    -- local isAcid = Board:IsAcid(p2) or (pawn2 ~= nil and pawn2:IsAcid())
-    local isFire = (pawn2 ~= nil and pawn2:IsFire())
-    local isAcid = (pawn2 ~= nil and pawn2:IsAcid())
+    local isFire = Board:IsFire(p2) or (pawn2 ~= nil and pawn2:IsFire())
+    local isAcid = Board:IsAcid(p2) or (pawn2 ~= nil and pawn2:IsAcid())
 
     local distance = 2
     while true do
@@ -92,7 +90,7 @@ function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
             damage2.sAnimation = "ExploAcid1"
             damage2.sSound = "/impact/generic/acid_canister"
             ret:AddSound("/enemy/beetle_1/attack_impact")
-            ret:AddArtillery(p2, damage2, "effects/shotup_ant2.png", NO_DELAY)
+            ret:AddArtillery(p1, damage2, "effects/shotup_ant2.png", NO_DELAY)
         end
 
         if isFire then
@@ -100,7 +98,7 @@ function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
             damage2.iFire = 1
             damage2.sAnimation = "ExploArt2"
             ret:AddSound("/weapons/fireball")
-            ret:AddArtillery(p2, damage2, "effects/shotup_ignite_fireball.png", NO_DELAY)
+            ret:AddArtillery(p1, damage2, "effects/shotup_ignite_fireball.png", NO_DELAY)
         end
 
         ret:AddDelay(0.1)
