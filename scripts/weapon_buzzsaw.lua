@@ -1,109 +1,89 @@
 Weapon_MD_Prime_Buzzsaw = Skill:new{
     Name = "Giant Buzzsaw",
-    Description = "Attack a unit and spread its A.C.I.D. or fire status ahead.",
+    Description = "Saw through a tile, dealing damage and confusing enemies.",
     Class = "Prime",
 	Icon = "advanced/weapons/Science_KO_Crack.png",
     Damage = 1,
-    Vore = false,
+    Range = 2,
+    Chaos = false,
     PowerCost = 0,
     Upgrades = 2,
     UpgradeCost = { 2, 2 },
-    UpgradeList = { "Voracious", "+1 Damage" },
+    UpgradeList = { "Unlimited Range", "Spread Chaos" },
     DamageSound = "/mech/distance/artillery/death",
     TipImage = {
         Unit = Point(2, 3),
-		Fire1 = Point(2, 2),
         Enemy = Point(2, 2),
-        Enemy2 = Point(2, 1),
-        Target = Point(2, 2)
+        Target = Point(2, 1)
     }
 }
 
 Weapon_MD_Prime_Buzzsaw_A = Weapon_MD_Prime_Buzzsaw:new{
-    UpgradeDescription = "Target will be dragged under and behind this unit",
-    Vore = true
+    UpgradeDescription = "Saw range is unlimited.",
+    Range = INT_MAX
 }
 
 Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
-    UpgradeDescription = "Increases damage by 1.",
-	Damage = 2
+    UpgradeDescription = "Spread A.C.I.D. or Fire as you travel.",
+    Chaos = true
 }
 
 Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
-    Vore = true,
-	Damage = 2
+    Range = INT_MAX,
+    Chaos = true
 }	
 
 function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
     local ret = PointList()
-    for i = DIR_START, DIR_END do
-        local point = p1 + DIR_VECTORS[i] * 1
+    for i = DIR_START, DIR_END do                           --For each direction
+        for k = 2, self.Range do                            --For each tile in a line
+            local point = p1 + DIR_VECTORS[i] * k
+            if not Board:IsValid(point) then                --Break when we leave the board
+                break
+            end
 
-        if Board:IsValid(point) then
-            ret:push_back(point)
+            if not Board:IsBlocked(point, PATH_FLYER) then  --Point is valid if it can be flown to, if it is empty
+                ret:push_back(point)
+            end
         end
     end
 
     return ret
 end
 
-local function MD_HiddenArtillery(effect, p)
-	effect:AddScript([[
-		local effect = SkillEffect()
-        local damage = SpaceDamage(Point(]].. p.x ..",".. p.y ..[[), 0)
-        effect:AddArtillery
-		Board:AddEffect(effect)
-	]])
-end
-
 function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
     local ret = SkillEffect()
+    local damagePoints = p1:MD_Bresenham(p2, 1, 1)                  --Points from here to there
+    local selfPawn = Board:GetPawn(p1)                              --Pawn firing
+    
+    ret:AddSound(self.DamageSound)                                  --Initial Saw Sound
+    ret:AddCharge(Board:GetPath(p1, p2, PATH_FLYER), NO_DELAY)      --Charge!
 
-    local p3 = p1 + DIR_VECTORS[GetDirection(p1 - p2)]
+    --Initial acid/fire statuses for chaos
+    local isFire = selfPawn:IsFire() or Board:IsFire(p1)
+    local isAcid = selfPawn:IsAcid() or Board:IsAcid(p1)
 
-    local damage = SpaceDamage(p2, self.Damage)
-    ret:AddMelee(p1, damage)
-    ret:AddSound(self.DamageSound)
+    for i, point in ipairs(damagePoints) do
 
-    local pawn2 = Board:GetPawn(p2)
+        --Check for more fire or acid
+        local target = Board:GetPawn(point)
+        isFire = isFire or Board:IsFire(point) or (target ~= nil and target:IsFire())
+        isAcid = isAcid or Board:IsAcid(point) or (target ~= nil and target:IsAcid())
 
-    if self.Vore and pawn2 ~= nil and not Board:IsBlocked(p3, PATH_FLYER) then
-        ret:AddDelay(0.05)
-        ret:AddCharge(Board:GetPath(p2, p3, PATH_FLYER), NO_DELAY)
-    end
+        --Damage flips targets
+        local damage = SpaceDamage(point, self.Damage, target ~= nil and DIR_FLIP or DIR_NONE)
+        damage.sSound = self.DamageSound
 
-    local isFire = Board:IsFire(p2) or (pawn2 ~= nil and pawn2:IsFire())
-    local isAcid = Board:IsAcid(p2) or (pawn2 ~= nil and pawn2:IsAcid())
-
-    local distance = 2
-    while true do
-
-        local p3 = p1 + DIR_VECTORS[GetDirection(p2 - p1)] * distance
-
-        if not Board:IsValid(p3) then
-            break
+        --If chaos upgrade, spread acid/fire
+        if self.Chaos then
+            damage.iFire = isFire and 1 or 0
+            damage.iAcid = isAcid and 1 or 0
         end
 
-        if isAcid then
-            local damage2 = SpaceDamage(p3, 0)
-            damage2.iAcid = 1
-            damage2.sAnimation = "ExploAcid1"
-            damage2.sSound = "/impact/generic/acid_canister"
-            ret:AddSound("/enemy/beetle_1/attack_impact")
-            ret:AddArtillery(p1, damage2, "effects/shotup_ant2.png", NO_DELAY)
-        end
-
-        if isFire then
-            local damage2 = SpaceDamage(p3, 0)
-            damage2.iFire = 1
-            damage2.sAnimation = "ExploArt2"
-            ret:AddSound("/weapons/fireball")
-            ret:AddArtillery(p1, damage2, "effects/shotup_ignite_fireball.png", NO_DELAY)
-        end
-
-        ret:AddDelay(0.1)
-
-        distance = distance + 1
+        ret:AddDamage(damage)                                       --Damage
+        ret:AddBounce(point, 2)                                     --Bounce
+        
+        ret:AddDelay(0.1)                                           --Delay effects as we travel
     end
 
     return ret
