@@ -25,7 +25,13 @@ Weap_MD_Ranged_Inkvine = LineArtillery:new{
 
 Weap_MD_Ranged_Inkvine_A = Weap_MD_Ranged_Inkvine:new{
     UpgradeDescription = "Apply A.C.I.D. to the left and right before firing.",
-	Vent = true
+	Vent = true,
+	TipImage = {
+		Unit = Point(2,3),
+		Enemy = Point(2,1),
+		Target = Point(2,1),
+		Mountain = Point(2,2)
+	}
 }
 
 Weap_MD_Ranged_Inkvine_B = Weap_MD_Ranged_Inkvine:new{

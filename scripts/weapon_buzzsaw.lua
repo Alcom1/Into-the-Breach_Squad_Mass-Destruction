@@ -14,23 +14,48 @@ Weapon_MD_Prime_Buzzsaw = Skill:new{
     TipImage = {
         Unit = Point(2, 3),
         Enemy = Point(2, 2),
-        Target = Point(2, 1)
+        Target = Point(2, 1),
+		CustomEnemy = "Firefly2"
     }
 }
 
 Weapon_MD_Prime_Buzzsaw_A = Weapon_MD_Prime_Buzzsaw:new{
     UpgradeDescription = "Saw range is unlimited.",
-    Range = INT_MAX
+    Range = INT_MAX,
+    TipImage = {
+        Unit = Point(2, 4),
+        Enemy = Point(2, 3),
+        Enemy2 = Point(2, 2),
+        Enemy3 = Point(2, 1),
+        Target = Point(2, 0),
+		CustomEnemy = "Firefly2",
+    }
 }
 
 Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
     UpgradeDescription = "Spread A.C.I.D. or Fire as you travel.",
-    Chaos = true
+    Chaos = true,
+    TipImage = {
+        Unit = Point(2, 3),
+        Enemy = Point(2, 2),
+        Target = Point(2, 1),
+		CustomEnemy = "Firefly2",
+        Fire1 = Point(2, 3)
+    }
 }
 
 Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
     Range = INT_MAX,
-    Chaos = true
+    Chaos = true,
+    TipImage = {
+        Unit = Point(2, 4),
+        Enemy = Point(2, 3),
+        Enemy2 = Point(2, 2),
+        Enemy3 = Point(2, 1),
+        Target = Point(2, 0),
+		CustomEnemy = "Firefly2",
+        Fire1 = Point(2, 3)
+    }
 }	
 
 function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
@@ -53,6 +78,16 @@ end
 
 function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
     local ret = SkillEffect()
+
+    --Tip image...
+    if Board:IsTipImage() then
+        Board:GetPawn(Point(2, 2)):FireWeapon(Point(3, 2), 1)
+
+        damage = SpaceDamage(0)
+        damage.fDelay = 1
+        ret:AddDamage(damage)
+    end
+
     local damagePoints = p1:MD_Bresenham(p2, 1, 1)                  --Points from here to there
     local selfPawn = Board:GetPawn(p1)                              --Pawn firing
     

@@ -20,8 +20,15 @@ Weap_MD_Brute_Fire = Skill:new{
 }
 
 Weap_MD_Brute_Fire_A = Weap_MD_Brute_Fire:new{
-    UpgradeDescription = "Control the direction and length of each flame jet.",
-    TwoClick = true
+    UpgradeDescription = "Individually control the direction and length of each flame jet.",
+    TwoClick = true,
+	TipImage = {
+        Unit = Point(2,2),
+        Enemy = Point(2,1),
+        Enemy2 = Point(3,2),
+        Target = Point(2,1),
+        Second_Click = Point(3, 2)
+    }
 }
 
 Weap_MD_Brute_Fire_B = Weap_MD_Brute_Fire:new{
@@ -45,8 +52,9 @@ Weap_MD_Brute_Fire_AB = Weap_MD_Brute_Fire:new{
         Unit = Point(2,3),
         Enemy = Point(2,1),
         Enemy2 = Point(2,2),
-        Enemy3 = Point(2,4),
-        Target = Point(2,1)
+        Enemy3 = Point(3,3),
+        Target = Point(2,1),
+        Second_Click = Point(3, 3)
     }
 }
 
