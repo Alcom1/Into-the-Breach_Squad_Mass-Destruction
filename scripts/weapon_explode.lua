@@ -1,7 +1,7 @@
 Pass_MD_Generic_Explode = PassiveSkill:new{
     Name = "Explosive A.C.I.D.",
     Description = "Units affected by both acid and fire will explode with instant death!",
-	Icon = "weapons/brute_bombrun.png",
+	Icon = "weapons/md_weapon_explode.png",
     Damage = 0,
     Passive = "md_Passive_FireAcidBoom",
     PowerCost = 0,
