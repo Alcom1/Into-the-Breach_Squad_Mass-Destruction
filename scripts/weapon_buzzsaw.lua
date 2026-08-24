@@ -60,9 +60,9 @@ Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
 
 function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
     local ret = PointList()
-    for i = DIR_START, DIR_END do                           --For each direction
-        for k = 2, self.Range do                            --For each tile in a line
-            local point = p1 + DIR_VECTORS[i] * k
+    for j = DIR_START, DIR_END do                           --For each direction
+        for i = 2, self.Range do                            --For each tile in a line
+            local point = p1 + DIR_VECTORS[j] * i
             if not Board:IsValid(point) then                --Break when we leave the board
                 break
             end

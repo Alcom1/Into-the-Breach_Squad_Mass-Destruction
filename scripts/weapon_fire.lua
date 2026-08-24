@@ -94,16 +94,14 @@ local function MD_FlameJet(weap, skill, p1, p2)
         end
         skill:AddDamage(damage)
     end
-
-    return skill
 end
 
 function Weap_MD_Brute_Fire:GetSkillEffect(p1, p2)
 	local ret = SkillEffect()
 
-    ret = MD_FlameJet(self, ret, p1, p2)
+    MD_FlameJet(self, ret, p1, p2)
     if not self.TwoClick then
-        ret = MD_FlameJet(self, ret, p1, p1 * 2 - p2)
+        MD_FlameJet(self, ret, p1, p1 * 2 - p2)
     end
 
 	return ret
@@ -112,8 +110,8 @@ end
 function Weap_MD_Brute_Fire:GetFinalEffect(p1, p2, p3)
 	local ret = SkillEffect()
 
-    ret = MD_FlameJet(self, ret, p1, p2)
-    ret = MD_FlameJet(self, ret, p1, p3)
+    MD_FlameJet(self, ret, p1, p2)
+    MD_FlameJet(self, ret, p1, p3)
 
     return ret
 end

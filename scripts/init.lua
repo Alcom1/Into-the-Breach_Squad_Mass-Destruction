@@ -93,7 +93,7 @@ function mod:init()
     --Misc sprite assets
     local generalSprites = {
         {"img/weapons/md_weapon_buzzsaw.png",   "img/weapons/weapon_buzzsaw.png"},
-        {"img/weapons/md_weapon_explode.png",      "img/weapons/weapon_explode.png"},
+        {"img/weapons/md_weapon_explode.png",   "img/weapons/weapon_explode.png"},
         {"img/weapons/md_weapon_fire.png",      "img/weapons/weapon_fire.png"},
         {"img/weapons/md_weapon_inkvine.png",   "img/weapons/weapon_inkvine.png"},
     }
