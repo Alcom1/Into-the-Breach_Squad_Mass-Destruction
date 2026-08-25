@@ -40,3 +40,9 @@ function Point:MD_Bresenham(p2, limitStart, limitFinal)
 
     return points
 end
+
+function Point:MD_Cross(p2)
+    local p1 = self
+
+    return p1.x * p2.y - p2.x * p1.y
+end

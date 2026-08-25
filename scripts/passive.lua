@@ -1,6 +1,6 @@
 local mod = modApi:getCurrentMod()
 local modApiExt = modapiext or require(mod.scriptPath.."modApiExt/modApiExt")
-local boardEvents = require(mod.scriptPath .."libraries/boardEvents")
+local boardEvents = require(mod.scriptPath .."libs/boardEvents")
 
 local this = {}
 local trackedPawns = {}

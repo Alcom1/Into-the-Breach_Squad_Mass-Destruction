@@ -96,11 +96,40 @@ function mod:init()
         {"img/weapons/md_weapon_explode.png",   "img/weapons/weapon_explode.png"},
         {"img/weapons/md_weapon_fire.png",      "img/weapons/weapon_fire.png"},
         {"img/weapons/md_weapon_inkvine.png",   "img/weapons/weapon_inkvine.png"},
+
+        --Inkvine has an edgecase where two vek can collide in one of four cardinal directions
+        {"img/combat/md_collision_hit_0.png",         "img/combat/collision_hit_new.png"},
+        {"img/combat/md_collision_hit_1.png",         "img/combat/collision_hit_new.png"},
+        {"img/combat/md_collision_hit_2.png",         "img/combat/collision_hit_new.png"},
+        {"img/combat/md_collision_hit_3.png",         "img/combat/collision_hit_new.png"},
     }
 
     for _, generalSprite in ipairs(generalSprites) do
         modApi:appendAsset(generalSprite[1], self.resourcePath..generalSprite[2])
-    end    
+    end
+
+    local img_offset = Point(-17, 6)
+
+    --Using DIR_VECTORS for cardinal directions
+    for i = DIR_START, DIR_END do
+
+        --North and West : Place sprite at p1 and offset it based on DIR.
+        if i == 0 or i == 3 then
+            Location["combat/md_collision_hit_"..i..".png"] = 
+                img_offset + 
+                Point(
+                    28 * 4 * DIR_VECTORS[i].x,
+                    21 * 4 * DIR_VECTORS[i].y)
+        end
+        --East : Place sprite south-east of P1 and offset it north
+        if i == 1 then
+            Location["combat/md_collision_hit_"..i..".png"] = img_offset + Point(56, -42)
+        end
+        --South : Place sprite south of P1 and do not offset it
+        if i == 2 then
+            Location["combat/md_collision_hit_"..i..".png"] = img_offset
+        end
+    end
 
     --Scripts
     local scripts = {

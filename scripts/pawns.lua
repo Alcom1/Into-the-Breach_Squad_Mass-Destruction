@@ -42,3 +42,11 @@ Pawn_MD_Mech_Inkvine = Pawn:new {
     ImpactMaterial = IMPACT_METAL,
     Massive = true
 }
+
+-- lemon scented dummy wall
+MD_Wall = Pawn:new{
+	Health = 10,
+	Flying = true,
+	Neutral = true,
+	DefaultTeam = TEAM_NONE,
+}
