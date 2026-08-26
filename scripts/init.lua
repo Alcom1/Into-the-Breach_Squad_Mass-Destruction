@@ -112,8 +112,8 @@ function mod:init()
         modApi:appendAsset(generalSprite[1], self.resourcePath..generalSprite[2])
     end
 
-    Location["combat/md_icon_acid.png"] =       Point(-13, 13 - 15)
-    Location["combat/md_icon_acid_fire.png"] =  Point(-19 - 8, 12 - 19 + 16)
+    Location["combat/md_icon_acid.png"] =       Point(-13, -2)
+    Location["combat/md_icon_acid_fire.png"] =  Point(-27,  9)
 
     local col_offset = Point(-17, 6)
 
@@ -142,6 +142,7 @@ function mod:init()
     local scripts = {
         "pawns",
         "point",
+        "terrain",
         "weapon_buzzsaw",
         "weapon_explode",
         "weapon_fire",

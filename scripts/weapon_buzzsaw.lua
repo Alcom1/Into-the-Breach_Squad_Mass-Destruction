@@ -60,10 +60,10 @@ Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
 
 function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
     local ret = PointList()
-    for j = DIR_START, DIR_END do                           --For each direction
-        for i = 2, self.Range do                            --For each tile in a line
+    for j = DIR_START, DIR_END do                                       --For each direction
+        for i = 2, self.Range do                                        --For each tile in a line
             local point = p1 + DIR_VECTORS[j] * i
-            if not Board:IsValid(point) then                --Break when we leave the board
+            if not Board:IsValid(point) or MD_IsMountain(point) then    --Break when we leave the board or hit a mountain
                 break
             end
 
