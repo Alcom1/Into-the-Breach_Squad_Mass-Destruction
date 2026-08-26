@@ -102,8 +102,6 @@ function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
 
         --Check for more fire or acid
         local target = Board:GetPawn(point)
-        isFire = isFire or Board:IsFire(point) or (target ~= nil and target:IsFire())
-        isAcid = isAcid or Board:IsAcid(point) or (target ~= nil and target:IsAcid())
 
         --Damage flips targets
         local damage = SpaceDamage(point, self.Damage, target ~= nil and DIR_FLIP or DIR_NONE)
@@ -112,8 +110,19 @@ function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
         --If chaos upgrade, spread acid/fire
         if self.Chaos then
             damage.iFire = isFire and 1 or 0
-            damage.iAcid = isAcid and 1 or 0
+            damage.iAcid = (isAcid and (target ~= nil or not isFire)) and 1 or 0
+
+            if isFire and isAcid then
+                if target ~= nil then
+                    damage.sImageMark = "combat/md_icon_acid_fire.png"
+                else
+                    damage.sImageMark = "combat/md_icon_acid.png"
+                end
+            end
         end
+
+        isFire = isFire or Board:IsFire(point) or (target ~= nil and target:IsFire())
+        isAcid = isAcid or Board:IsAcid(point) or (target ~= nil and target:IsAcid())
 
         ret:AddDamage(damage)                                       --Damage
         ret:AddBounce(point, 2)                                     --Bounce
