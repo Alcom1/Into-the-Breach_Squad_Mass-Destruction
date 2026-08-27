@@ -3,12 +3,12 @@ local imageOffset = modApi:getPaletteImageOffset(mod.id)
 
 Pawn_MD_Mech_Buzzsaw = Pawn:new {
     Name = "Buzzsaw Mech",
-    Class = "Prime",
+    Class = "Brute",
     Health = 2,
     MoveSpeed = 4,
     Image = "md_mech_buzzsaw",
     ImageOffset = imageOffset,
-	SkillList = { "Weapon_MD_Prime_Buzzsaw", "Pass_MD_Generic_Explode" },
+	SkillList = { "Weapon_MD_Brute_Buzzsaw", "Pass_MD_Generic_Explode" },
 	SoundLocation = "/mech/brute/tank/",
     DefaultTeam = TEAM_PLAYER,
     ImpactMaterial = IMPACT_METAL,

@@ -1,7 +1,7 @@
-Weapon_MD_Prime_Buzzsaw = Skill:new{
+Weapon_MD_Brute_Buzzsaw = Skill:new{
     Name = "Giant Buzzsaw",
     Description = "Saw through a tile, dealing damage and confusing enemies.",
-    Class = "Prime",
+    Class = "Brute",
 	Icon = "weapons/md_weapon_buzzsaw.png",
     Damage = 1,
     Range = 2,
@@ -19,7 +19,7 @@ Weapon_MD_Prime_Buzzsaw = Skill:new{
     }
 }
 
-Weapon_MD_Prime_Buzzsaw_A = Weapon_MD_Prime_Buzzsaw:new{
+Weapon_MD_Brute_Buzzsaw_A = Weapon_MD_Brute_Buzzsaw:new{
     UpgradeDescription = "Saw range is unlimited.",
     Range = INT_MAX,
     TipImage = {
@@ -32,7 +32,7 @@ Weapon_MD_Prime_Buzzsaw_A = Weapon_MD_Prime_Buzzsaw:new{
     }
 }
 
-Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
+Weapon_MD_Brute_Buzzsaw_B = Weapon_MD_Brute_Buzzsaw:new{
     UpgradeDescription = "Spread A.C.I.D. or Fire as you travel.",
     Chaos = true,
     TipImage = {
@@ -44,7 +44,7 @@ Weapon_MD_Prime_Buzzsaw_B = Weapon_MD_Prime_Buzzsaw:new{
     }
 }
 
-Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
+Weapon_MD_Brute_Buzzsaw_AB = Weapon_MD_Brute_Buzzsaw:new{
     Range = INT_MAX,
     Chaos = true,
     TipImage = {
@@ -58,7 +58,7 @@ Weapon_MD_Prime_Buzzsaw_AB = Weapon_MD_Prime_Buzzsaw:new{
     }
 }	
 
-function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
+function Weapon_MD_Brute_Buzzsaw:GetTargetArea(p1)
     local ret = PointList()
     for j = DIR_START, DIR_END do                                       --For each direction
         for i = 2, self.Range do                                        --For each tile in a line
@@ -76,7 +76,7 @@ function Weapon_MD_Prime_Buzzsaw:GetTargetArea(p1)
     return ret
 end
 
-function Weapon_MD_Prime_Buzzsaw:GetSkillEffect(p1, p2)
+function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
     local ret = SkillEffect()
 
     --Tip image...
