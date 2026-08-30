@@ -95,8 +95,12 @@ function mod:init()
         {"img/weapons/md_weapon_inkvine.png",   "img/weapons/weapon_inkvine.png"},
 
         --Icons for when a tile will be damaged with both fire and acid simultaneously
-        {"img/combat/md_icon_acid.png",    "img/combat/icon_acid_copy.png"},
+        {"img/combat/md_icon_acid.png",         "img/combat/icon_acid_copy.png"},
         {"img/combat/md_icon_acid_fire.png",    "img/combat/icon_acid_fire.png"},
+
+        --Icons for when a tile will be flipped, but also get either acid or fire
+        {"img/combat/md_icon_acid_flip.png",         "img/combat/icon_acid_flip.png"},
+        {"img/combat/md_icon_fire_flip.png",         "img/combat/icon_fire_flip.png"},
 
         --Inkvine has an edgecase where two vek can collide in one of four cardinal directions
         {"img/combat/md_collision_hit_0.png",   "img/combat/collision_hit_new.png"},
@@ -111,6 +115,9 @@ function mod:init()
 
     Location["combat/md_icon_acid.png"] =       Point(-13, -2)
     Location["combat/md_icon_acid_fire.png"] =  Point(-27,  9)
+    
+    Location["combat/md_icon_acid_flip.png"] =  Point(-22, 9)
+    Location["combat/md_icon_fire_flip.png"] =  Point(-22, 9)
 
     local col_offset = Point(-17, 6)
 

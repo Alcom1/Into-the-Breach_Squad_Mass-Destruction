@@ -114,10 +114,14 @@ function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
 
             if isFire and isAcid then
                 if target ~= nil then
-                    damage.sImageMark = "combat/md_icon_acid_fire.png"
+                    damage.sImageMark = "combat/md_icon_acid_fire.png"  --Fire + Acid + Flip
                 else
-                    damage.sImageMark = "combat/md_icon_acid.png"
+                    damage.sImageMark = "combat/md_icon_acid.png"       --Fire + Acid
                 end
+            elseif isFire and target ~= nil then
+                damage.sImageMark = "combat/md_icon_fire_flip.png"      --Fire + Flip
+            elseif isAcid and target ~= nil then
+                damage.sImageMark = "combat/md_icon_acid_flip.png"      --Acid + Flip
             end
         end
 
