@@ -109,8 +109,25 @@ end
 
 function Weap_MD_Brute_Fire:GetFinalEffect(p1, p2, p3)
 	local ret = SkillEffect()
+    local isAligned = false     --If jets are in the same direction
+
+    --Check if flame jets are aligned
+    if GetDirection(p2 - p1) == GetDirection(p3 - p1) then
+        isAligned = true
+        
+        --Check and swap order so longer jet goes first
+        if p1:Manhattan(p2) < p1:Manhattan(p3) then
+            p2, p3 = p3, p2
+            LOG("SWAP!!!")
+        end
+    end
 
     MD_FlameJet(self, ret, p1, p2)
+
+    if isAligned then
+        ret:AddDelay(0.1)
+    end
+
     MD_FlameJet(self, ret, p1, p3)
 
     return ret
