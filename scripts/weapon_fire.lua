@@ -118,7 +118,6 @@ function Weap_MD_Brute_Fire:GetFinalEffect(p1, p2, p3)
         --Check and swap order so longer jet goes first
         if p1:Manhattan(p2) < p1:Manhattan(p3) then
             p2, p3 = p3, p2
-            LOG("SWAP!!!")
         end
     end
 

@@ -96,6 +96,7 @@ function mod:init()
 
         --Icons for when a tile will be damaged with both fire and acid simultaneously
         {"img/combat/md_icon_acid.png",         "img/combat/icon_acid_copy.png"},
+        {"img/combat/md_icon_acid_2.png",       "img/combat/icon_acid_copy.png"},   --Except this one, which is for inkvine
         {"img/combat/md_icon_acid_fire.png",    "img/combat/icon_acid_fire.png"},
 
         --Icons for when a tile will be flipped, but also get either acid or fire
@@ -114,6 +115,7 @@ function mod:init()
     end
 
     Location["combat/md_icon_acid.png"] =       Point(-13, -2)
+    Location["combat/md_icon_acid_2.png"] =     Point(-10,  9)
     Location["combat/md_icon_acid_fire.png"] =  Point(-27,  9)
     
     Location["combat/md_icon_acid_flip.png"] =  Point(-22, 9)

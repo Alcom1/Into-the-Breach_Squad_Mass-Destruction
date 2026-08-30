@@ -116,7 +116,7 @@ function MD_ArtilleryAcid(self, skill, p1, p2, delay)
 	end
 end
 
-function MD_ArtilleryPush(self, skill, p1, p2)
+function MD_ArtilleryPush(self, skill, p1, p2, isBackAcid)
 
 	skill:AddBounce(p2, 1)
 	
@@ -124,6 +124,12 @@ function MD_ArtilleryPush(self, skill, p1, p2)
 		local damagePush = SpaceDamage(p2 + DIR_VECTORS[dir], 0)
 		damagePush.iPush = dir
 		damagePush.sAnimation = "airpush_"..dir
+
+		--Re-apply back-acid icon if it's overridden
+		if isBackAcid and p1:Manhattan(p2 + DIR_VECTORS[dir]) == 1 then
+			damagePush.sImageMark = "combat/md_icon_acid_2.png"
+		end
+
 		skill:AddDamage(damagePush)
 	end
 end
@@ -154,9 +160,12 @@ function Weap_MD_Ranged_Inkvine:GetFinalEffect(p1, p2, p3)
 
 	MD_ArtilleryAcid(self, ret, p1, p2, NO_DELAY)
 	MD_ArtilleryAcid(self, ret, p1, p3)
+	
+	--Cross product, direction of shots relative to each other.
+	local cross = (p2 - p1):MD_Cross(p3 - p1)
 
-	MD_ArtilleryPush(self, ret, p1, p2)
-	MD_ArtilleryPush(self, ret, p1, p3)
+	MD_ArtilleryPush(self, ret, p1, p2, self.Vent and cross == 0)
+	MD_ArtilleryPush(self, ret, p1, p3, self.Vent and cross == 0)
 
 	--Fun fun fun edgecase handling for two artillery shots causing targets to collide at a corner
 	--If the edgecase occurs : 
@@ -167,9 +176,7 @@ function Weap_MD_Ranged_Inkvine:GetFinalEffect(p1, p2, p3)
 	   	p1:Manhattan(p3) == 2 and							--If Hit 2 is 2-away
 		not Board:IsBlocked(p2 + p3 - p1, PATH_FLYER) then	--If "corner" is empty
 
-		--Cross product to determine angle between hits
 		local points = {}
-		local cross = (p2 - p1):MD_Cross(p3 - p1)
 
 		--If Hits 1 and 2 are at right angles, store them in order
 		if cross > 0 then
