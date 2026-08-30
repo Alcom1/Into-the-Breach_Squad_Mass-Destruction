@@ -215,6 +215,7 @@ function Weap_MD_Ranged_Inkvine:GetFinalEffect(p1, p2, p3)
 				end
 
 				collideDamage.sImageMark = "combat/md_collision_hit_"..markDir..".png"
+				collideDamage.sAnimation = "none" --idk why this isn't the default
 				ret:AddDamage(collideDamage)
 
 				--Show collision damage
