@@ -26,21 +26,21 @@ function mod:init()
         md_mech_buzzsaw_a =         { PosX = -17, PosY =  0, NumFrames = 8, Time = 0.20  },
         md_mech_buzzsaw_broken =    { PosX = -17, PosY =  0 },
         md_mech_buzzsaw_w =         { PosX = -20, PosY =  9 },
-        md_mech_buzzsaw_w_broken =  { PosX = -17, PosY =  0 },
+        md_mech_buzzsaw_w_broken =  { PosX = -20, PosY =  9 },
 
         md_mech_burner =            { PosX = -18, PosY =  3 },
         md_mech_burner_ns =         { },
         md_mech_burner_a =          { PosX = -18, PosY =  3, NumFrames = 4 },
         md_mech_burner_broken =     { PosX = -18, PosY =  3 },
         md_mech_burner_w =          { PosX = -18, PosY = 11 },
-        md_mech_burner_w_broken =   { PosX = -18, PosY =  3 },
+        md_mech_burner_w_broken =   { PosX = -18, PosY = 11 },
 
         md_mech_inkvine =           { PosX = -18, PosY = -2 },
         md_mech_inkvine_ns =        { },
         md_mech_inkvine_a =         { PosX = -18, PosY = -2, NumFrames = 8 },
         md_mech_inkvine_broken =    { PosX = -18, PosY = -2 },
         md_mech_inkvine_w =         { PosX = -21, PosY =  8 },
-        md_mech_inkvine_w_broken =  { PosX = -18, PosY = -2 },
+        md_mech_inkvine_w_broken =  { PosX = -21, PosY =  8 },
     }
 
     --Mapping file names for mech sprites
