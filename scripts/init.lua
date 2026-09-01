@@ -184,7 +184,7 @@ function mod:load(options, version)
     modApi:addSquadTrue(
         squadMechs, 
         "Mass Destruction",
-        "Ruthless mechs that combine A.C.I.D. and fire into a deadly explosive combination.",
+        "These ruthless Mechs combine A.C.I.D. and fire into a deadly explosive combination.",
         self.resourcePath..self.icon_squad)
 
 end
