@@ -24,7 +24,7 @@ function mod:init()
         md_mech_buzzsaw =           { PosX = -17, PosY =  0 },
         md_mech_buzzsaw_ns =        { },
         md_mech_buzzsaw_a =         { PosX = -17, PosY =  0, NumFrames = 8, Time = 0.20  },
-        md_mech_buzzsaw_broken =    { PosX = -17, PosY =  0 },
+        md_mech_buzzsaw_broken =    { PosX = -17, PosY =  2 },
         md_mech_buzzsaw_w =         { PosX = -20, PosY =  9 },
         md_mech_buzzsaw_w_broken =  { PosX = -20, PosY =  9 },
 
@@ -146,6 +146,8 @@ function mod:init()
 
     --Scripts
     local scripts = {
+        "libs/achievementsExt",
+        "achievements",
         "pawns",
         "point",
         "terrain",
