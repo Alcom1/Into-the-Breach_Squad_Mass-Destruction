@@ -34,14 +34,8 @@ end
 --Validation functions
 ----------------------------------------------------------------
 --Get tier of current passive
-local function MD_CurrentPassiveTier()
-    if IsPassiveSkill("md_Passive_FireAcidBoomh_2") then
-        return 2
-    elseif IsPassiveSkill("md_Passive_FireAcidBoom") then
-        return 1
-    end
-
-    return 0
+local function MD_IsPassiveActive()
+    return IsPassiveSkill("md_Passive_FireAcidBoom")
 end
 
 ----------------------------------------------------------------
@@ -52,7 +46,9 @@ local function MD_CheckDoExplosion()
 
     if #trackedPawns > 0 then
 
-        local fx = SkillEffect()    --Create effect
+        local fx1 = SkillEffect()   --Effect for death-explosion
+        local fx2 = SkillEffect()   --Effect for fire after explosion
+        fx2:AddDelay(0.1)           
         local isBoom = false        --If there is an earth-shattering kaboom!
 
         while true do
@@ -64,16 +60,20 @@ local function MD_CheckDoExplosion()
                 local pawn = Board:GetPawn(id)
 
                 if pawn then
+                    --Kaboom!
                     local loc = pawn:GetSpace()
-                    local damage = SpaceDamage(loc, DAMAGE_DEATH)   --Create damage
-                    damage.sSound = "/props/exploding_mine"
-                    damage.sAnimation = "ExploArt3"                 --Here's the kaboom!
-                    damage.iFire = EFFECT_CREATE                    --Leave fire behind
-	                damage.iAcid = EFFECT_REMOVE                    --Spend acid on explosion
-                    fx:AddDamage(damage)                            --Add damage to effect
-                    fx:AddBounce(loc, 3)                            --Impact
+                    local damage1 = SpaceDamage(loc, DAMAGE_DEATH)
+                    damage1.sSound = "/props/exploding_mine"
+                    damage1.sAnimation = "ExploArt3"    --Here's the kaboom!
+                    fx1:AddDamage(damage1)
+                    fx1:AddBounce(loc, 3)               --Impact
 
-                    isBoom = true                                   --Confirm there is a kaboom!
+                    --Post kaboom-fire!
+                    local damage2 = SpaceDamage(loc, 0)
+                    damage2.iFire = EFFECT_CREATE
+                    fx2:AddDamage(damage2)
+
+                    isBoom = true                       --Confirm there is a kaboom!
                 end
             else
                 break
@@ -82,8 +82,11 @@ local function MD_CheckDoExplosion()
             trackedPawns[i] = nil
         end
 
+        --Add effect to board if there are any kabooms!
         if isBoom then
-            Board:AddEffect(fx)                         --Add effect to board if there are any kabooms!
+            fx1:AddBoardShake(0.2)  --more impact!
+            Board:AddEffect(fx1)    --kaboom!
+            Board:AddEffect(fx2)    --fire!
         end
     end
 
@@ -118,14 +121,14 @@ function this:load()
 
     modApiExt:addPawnIsAcidHook(
         function(mission, pawn, isAcid)
-            if MD_CurrentPassiveTier() >= 1 and isAcid and pawn:IsFire() then
+            if MD_IsPassiveActive() and isAcid and pawn:IsFire() then
                 MD_TrackPawn(pawn)
             end
         end)
 
     modApiExt:addPawnIsFireHook(
         function(mission, pawn, isFire)
-            if MD_CurrentPassiveTier() >= 1 and isFire and pawn:IsAcid() then
+            if MD_IsPassiveActive() and isFire and pawn:IsAcid() then
                 MD_TrackPawn(pawn)
             end
         end)
