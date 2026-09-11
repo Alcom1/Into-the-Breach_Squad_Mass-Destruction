@@ -1,8 +1,12 @@
+--Credits (Advanced Edition) :
+--Alexandria/Alcom :    Everything
+--Rachel :              <3
+
 --Mod
 local mod = {
     id = "squad_mass_destruction",
     name = "Mass Destruction",
-    version = "0.10",
+    version = "0.50",
     icon = "img/units/player/mech_tank_ns.png",
     icon_squad = "img/units/player/mech_tank_ns.png",
     requirements = {},
