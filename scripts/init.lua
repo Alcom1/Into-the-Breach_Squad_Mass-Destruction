@@ -146,7 +146,6 @@ function mod:init()
 
     --Scripts
     local scripts = {
-        "libs/achievementsExt",
         "achievements",
         "pawns",
         "point",

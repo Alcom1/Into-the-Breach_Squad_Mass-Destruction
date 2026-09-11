@@ -74,7 +74,7 @@ local function isCorpoMission(mission)
 end
 
 --Achievement 1
-local ach_md_spread = modApi.achievements:addExt{
+local ach_md_spread = modApi.achievements:add{
 	--Required
 	id = "md_ach1",
 	name = "Special Delivery",
@@ -86,7 +86,7 @@ local ach_md_spread = modApi.achievements:addExt{
 }
 
 --Achievement 2
-local ach_md_splode = modApi.achievements:addExt{
+local ach_md_splode = modApi.achievements:add{
 	--Required
 	id = "md_ach2",
 	name = "Chemical Warfare",
@@ -104,7 +104,7 @@ function ach_md_splode:getTextProgress()
 end
 
 --Achievement 3
-local ach_md_anticap = modApi.achievements:addExt{
+local ach_md_anticap = modApi.achievements:add{
 	--Required
 	id = "md_ach3",
 	name = "Anticapitalist",
@@ -122,9 +122,10 @@ function ach_md_anticap:getTextProgress()
 	return count.." tower"..plural.." burned"
 end
 
-function ach_md_anticap:isFailed()
-	return achievementData().anticap_failed
-end
+-- Unused fail state for corpo
+-- function ach_md_anticap:isFailed()
+-- 	return achievementData().anticap_failed
+-- end
 
 -- Hooks
 --ACH 1 (Not a hook)
