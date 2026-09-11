@@ -1,6 +1,5 @@
 local mod = modApi:getCurrentMod()
 local modApiExt = modapiext or require(mod.scriptPath.."modApiExt/modApiExt")
-local boardEvents = require(mod.scriptPath .."libs/boardEvents")
 
 local this = {}
 local trackedPawns = {}
@@ -30,6 +29,21 @@ local function MD_TrackPawn(pawn)
     table.insert(trackedPawns, pawn:GetId())    --Track this pawn
 end
 
+local function MD_ISTracked(pawn)
+
+    local id1 = pawn:GetId()
+    local isTracked = false
+
+    for i, id2 in ipairs(trackedPawns) do
+        if id1 == id2 then
+            isTracked = true
+        end
+    end
+
+    return isTracked
+
+end
+
 ----------------------------------------------------------------
 --Validation functions
 ----------------------------------------------------------------
@@ -48,8 +62,8 @@ local function MD_CheckDoExplosion()
 
         local fx1 = SkillEffect()   --Effect for death-explosion
         local fx2 = SkillEffect()   --Effect for fire after explosion
-        fx2:AddDelay(0.1)           
-        local isBoom = false        --If there is an earth-shattering kaboom!
+        fx2:AddDelay(0.1)
+        local count = 0
 
         while true do
 
@@ -73,7 +87,7 @@ local function MD_CheckDoExplosion()
                     damage2.iFire = EFFECT_CREATE
                     fx2:AddDamage(damage2)
 
-                    isBoom = true                       --Confirm there is a kaboom!
+                    count = count + 1
                 end
             else
                 break
@@ -83,8 +97,11 @@ local function MD_CheckDoExplosion()
         end
 
         --Add effect to board if there are any kabooms!
-        if isBoom then
+        if count > 0 then
             fx1:AddBoardShake(0.2)  --more impact!
+            fx1:AddScript([[
+                MD_CheckAch2Trigger(]]..count..[[)
+            ]])
             Board:AddEffect(fx1)    --kaboom!
             Board:AddEffect(fx2)    --fire!
         end
@@ -121,14 +138,15 @@ function this:load()
 
     modApiExt:addPawnIsAcidHook(
         function(mission, pawn, isAcid)
-            if MD_IsPassiveActive() and isAcid and pawn:IsFire() then
+            if MD_IsPassiveActive() and not MD_ISTracked(pawn) and not pawn:IsDead() and isAcid and pawn:IsFire() then
                 MD_TrackPawn(pawn)
             end
         end)
 
     modApiExt:addPawnIsFireHook(
         function(mission, pawn, isFire)
-            if MD_IsPassiveActive() and isFire and pawn:IsAcid() then
+
+            if MD_IsPassiveActive() and not MD_ISTracked(pawn) and not pawn:IsDead() and isFire and pawn:IsAcid() then
                 MD_TrackPawn(pawn)
             end
         end)

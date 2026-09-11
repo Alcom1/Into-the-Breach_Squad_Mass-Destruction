@@ -112,6 +112,18 @@ function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
             damage.iFire = isFire and 1 or 0
             damage.iAcid = (isAcid and (target ~= nil or not isFire)) and 1 or 0
 
+            if  target ~= nil and       --Target exists
+                target:IsEnemy() and    --Target is an enemy
+                not target:IsFire() and --Target is not on fire
+                not target:IsAcid() and --Target is not acidified
+                damage.iFire == 1 and   --Damage will deal fire
+                damage.iAcid == 1 then  --Damage will deal acid
+
+                ret:AddScript([[
+                    MD_CheckAch1Trigger()
+                ]])
+            end
+
             if isFire and isAcid then
                 if target ~= nil then
                     damage.sImageMark = "combat/md_icon_acid_fire.png"  --Fire + Acid + Flip
