@@ -91,7 +91,10 @@ function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
     local damagePoints = p1:MD_Bresenham(p2, 1, 1)                  --Points from here to there
     local selfPawn = Board:GetPawn(p1)                              --Pawn firing
     
-    ret:AddSound(self.DamageSound)                                  --Initial Saw Sound
+    local startDamage = SpaceDamage(p1, 0)                          --Initial Saw Sound & sfx
+    startDamage.sAnimation = "airpush_"..GetDirection(p1 - p2)
+    startDamage.sSound = self.DamageSound
+    ret:AddDamage(startDamage)
     ret:AddCharge(Board:GetPath(p1, p2, PATH_FLYER), NO_DELAY)      --Charge!
 
     --Initial acid/fire statuses for chaos
@@ -106,6 +109,7 @@ function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
         --Damage flips targets
         local damage = SpaceDamage(point, self.Damage, target ~= nil and DIR_FLIP or DIR_NONE)
         damage.sSound = self.DamageSound
+        damage.sAnimation = "airpush_"..GetDirection(p1 - p2)
 
         --If chaos upgrade, spread acid/fire
         if self.Chaos then
@@ -141,6 +145,9 @@ function Weapon_MD_Brute_Buzzsaw:GetSkillEffect(p1, p2)
         isAcid = isAcid or Board:IsAcid(point) or (target ~= nil and target:IsAcid())
 
         ret:AddDamage(damage)                                       --Damage
+        if target ~= nil then
+            ret:AddSound("/weapons/sword")
+        end
         ret:AddBounce(point, 2)                                     --Bounce
         
         ret:AddDelay(0.1)                                           --Delay effects as we travel
