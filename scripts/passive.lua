@@ -78,7 +78,7 @@ local function MD_CheckDoExplosion()
                     local loc = pawn:GetSpace()
                     local damage1 = SpaceDamage(loc, DAMAGE_DEATH)
                     damage1.sSound = "/props/exploding_mine"
-                    damage1.sAnimation = "ExploArt3"    --Here's the kaboom!
+                    damage1.sAnimation = "explo_fire1"  --Here's the kaboom!
                     fx1:AddDamage(damage1)
                     fx1:AddBounce(loc, 3)               --Impact
 
