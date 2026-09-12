@@ -6,7 +6,7 @@
 local mod = {
     id = "squad_mass_destruction",
     name = "Mass Destruction",
-    version = "0.50",
+    version = "0.55",
     icon = "img/icons/mod_icon.png",
     icon_squad = "img/icons/squad_icon.png",
     requirements = {},
@@ -150,6 +150,7 @@ function mod:init()
 
     --Scripts
     local scripts = {
+        "libs/weaponPreview",
         "achievements",
         "pawns",
         "point",

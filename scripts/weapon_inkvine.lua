@@ -1,6 +1,5 @@
 local mod = modApi:getCurrentMod()
 local globals = require(mod.scriptPath .."libs/globals")
-local weaponPreview = require(mod.scriptPath .."libs/weaponPreview")
 local globalPawnIndex = globals:new()
 
 Weap_MD_Ranged_Inkvine = LineArtillery:new{
