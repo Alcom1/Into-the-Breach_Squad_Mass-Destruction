@@ -38,7 +38,7 @@ Weap_MD_Ranged_Inkvine_A = Weap_MD_Ranged_Inkvine:new{
 }
 
 Weap_MD_Ranged_Inkvine_B = Weap_MD_Ranged_Inkvine:new{
-    UpgradeDescription = "Fire two shots in different directions.",
+    UpgradeDescription = "Fire two shots, each in a different direction.",
     TwoClick = true,
 	TipImage = {
         Unit = 			Point(1, 1),
