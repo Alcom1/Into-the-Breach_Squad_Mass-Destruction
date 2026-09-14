@@ -1,6 +1,6 @@
 Weap_MD_Brute_Fire = Skill:new{
     Name = "Side Burners",
-    Description = "Deal 1 damage to opposite tiles, igniting and pushing them.",
+    Description = "Ignite and push a pair of opposite tiles.",
     Class = "Brute",
 	Icon = "weapons/md_weapon_fire.png",
     Damage = 0,
