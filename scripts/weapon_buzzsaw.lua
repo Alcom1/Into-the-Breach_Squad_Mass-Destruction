@@ -33,7 +33,7 @@ Weapon_MD_Brute_Buzzsaw_A = Weapon_MD_Brute_Buzzsaw:new{
 }
 
 Weapon_MD_Brute_Buzzsaw_B = Weapon_MD_Brute_Buzzsaw:new{
-    UpgradeDescription = "Spread A.C.I.D. or Fire as you travel.",
+    UpgradeDescription = "Pick up and spread A.C.I.D. or Fire as you travel.",
     Chaos = true,
     TipImage = {
         Unit = Point(2, 3),
