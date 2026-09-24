@@ -97,10 +97,17 @@ local ach_md_splode = modApi.achievements:add{
 	squad = SQUAD_MASS_DESTRUCTION,
 }
 
-function ach_md_splode:getTextProgress()
+function ach_md_splode:getTooltip()
+
+	local ret = self.tooltip
+	
+	--Show tracker during missions
 	if isRealMission() then
-		return achievementData().splode_count.." kills"
+		local addon = achievementData().splode_count.." kills"
+		ret = ret.."\n\n"..addon
 	end
+
+	return ret
 end
 
 --Achievement 3
@@ -115,11 +122,19 @@ local ach_md_anticap = modApi.achievements:add{
 	squad = SQUAD_MASS_DESTRUCTION,
 }
 
-function ach_md_anticap:getTextProgress()
-	local count = achievementData().anticap_count
-	local plural = count > 1 and "s" or ""
+function ach_md_anticap:getTooltip()
 
-	return count.." tower"..plural.." burned"
+	local ret = self.tooltip
+
+	--Show tracker across entire game
+	if GAME ~= nil then
+		local count = achievementData().anticap_count
+		local plural = count > 1 and "s" or ""
+		local addon = count.." tower"..plural.." burned"
+		ret = ret.."\n\n"..addon
+	end
+
+	return ret
 end
 
 -- Unused fail state for corpo
