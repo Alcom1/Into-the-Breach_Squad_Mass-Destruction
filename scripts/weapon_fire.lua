@@ -32,7 +32,7 @@ Weap_MD_Brute_Fire_A = Weap_MD_Brute_Fire:new{
 }
 
 Weap_MD_Brute_Fire_B = Weap_MD_Brute_Fire:new{
-    UpgradeDescription = "Increases range by 1.",
+    UpgradeDescription = "Extends maximum burner range by 1 tile.",
 	PathSize = 2, 
 	Range = 2,
 	TipImage = {
