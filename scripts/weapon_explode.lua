@@ -22,7 +22,7 @@ function MD_Hidden_Explosion(effect, p)
 	effect:AddScript([[
 		local effect = SkillEffect()
         local damage = SpaceDamage(Point(]].. p.x ..",".. p.y ..[[), DAMAGE_DEATH)        
-        damage.sAnimation = "ExploArt3"
+        damage.sAnimation = "explo_fire1"
         damage.iFire = EFFECT_CREATE
         damage.iAcid = EFFECT_REMOVE
         effect:AddDamage(damage)
