@@ -1,12 +1,13 @@
 --Credits (Advanced Edition) :
 --Alexandria/Alcom :    Everything
 --Rachel :              <3
+--Jefepato :            Playtesting
 
 --Mod
 local mod = {
     id = "squad_mass_destruction",
     name = "Mass Destruction",
-    version = "0.55",
+    version = "1.00",
     icon = "img/icons/mod_icon.png",
     icon_squad = "img/icons/squad_icon.png",
     requirements = {},
